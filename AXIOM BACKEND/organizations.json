@@ -1,0 +1,22 @@
+[
+  {
+    "id": "org-003",
+    "name": "Northstar Engineering",
+    "slug": "northstar",
+    "industry": "Engineering & Infrastructure",
+    "password_salt": "wk-demo-salt-c3",
+    "password_sha256": "63de833db79c06522012d472e816bb847ac6d94362fddda02332fc5e3f1f081b",
+    "is_demo": true,
+    "_note": "Prototype credential store for demo only. Replace with a real identity provider and a slow password hash (bcrypt/argon2) before production."
+  },
+  {
+    "id": "org-002",
+    "name": "Meridian Cloud Labs",
+    "slug": "meridian",
+    "industry": "Software & Cloud Services",
+    "password_salt": "wk-demo-salt-b2",
+    "password_sha256": "19bf60c72b96da445db641d3389ec259f94559c9c40af24139b22d8ee61b391c",
+    "is_demo": true,
+    "_note": "Second demo organization, kept so data isolation between organizations can be demonstrated live."
+  }
+]

@@ -1,0 +1,198 @@
+[
+  {
+    "id": "adv-001",
+    "engineer_name": "Priya Shah",
+    "advice": "Before you change anything during an incident, write down what you believe is happening and what evidence would prove you wrong. Half the long outages I have seen were caused by three people acting on three unstated theories at once.",
+    "category": "Debugging",
+    "is_demo": true
+  },
+  {
+    "id": "adv-002",
+    "engineer_name": "Sara Wilson",
+    "advice": "If a bug will not reproduce on your bench, stop fixing the product and start fixing the bench. List every difference between your test setup and the customer's environment, then remove them one at a time.",
+    "category": "Debugging",
+    "is_demo": true
+  },
+  {
+    "id": "adv-003",
+    "engineer_name": "Arjun Mehta",
+    "advice": "When the same component fails the same way twice, the component is not the problem. Go back and re-derive the operating conditions it is actually living in today, not the ones it was specified for years ago.",
+    "category": "Debugging",
+    "is_demo": true
+  },
+  {
+    "id": "adv-004",
+    "engineer_name": "Priya Shah",
+    "advice": "Every shared resource is a global budget: database connections, file handles, thread pools, rate limits. Write the total budget down somewhere visible, because the failure mode of an invisible limit is always a surprise at peak traffic.",
+    "category": "Architecture",
+    "is_demo": true
+  },
+  {
+    "id": "adv-005",
+    "engineer_name": "Alex Morgan",
+    "advice": "Draw the system boundary wider than feels necessary. Most of the failures I investigated lived in the interfaces between two correct designs, not inside either one of them.",
+    "category": "Architecture",
+    "is_demo": true
+  },
+  {
+    "id": "adv-006",
+    "engineer_name": "Daniel Thomas",
+    "advice": "Verify the inputs to your design with the same rigour you apply to the calculation. A perfectly compliant result built on one convenient site measurement is still an unsafe structure.",
+    "category": "Design",
+    "is_demo": true
+  },
+  {
+    "id": "adv-007",
+    "engineer_name": "Sara Wilson",
+    "advice": "Design so that the thing you promise is the thing you can measure. If you commit to 30 days of battery life, make sure there is a straightforward way to measure real sleep current on an assembled unit.",
+    "category": "Design",
+    "is_demo": true
+  },
+  {
+    "id": "adv-008",
+    "engineer_name": "Daniel Thomas",
+    "advice": "Push back on a cheap investigation while it is still a line in a budget. Once it becomes a defect in a finished structure, you will spend twenty times the saving and lose the argument anyway.",
+    "category": "Design",
+    "is_demo": true
+  },
+  {
+    "id": "adv-009",
+    "engineer_name": "Alex Morgan",
+    "advice": "Keep a personal defect notebook from your first year. Twenty years later it is the only honest record of how your judgement actually developed, and it is worth more to juniors than any polished presentation.",
+    "category": "Career",
+    "is_demo": true
+  },
+  {
+    "id": "adv-010",
+    "engineer_name": "Arjun Mehta",
+    "advice": "Learn to explain a technical decision to the person who signs the cheque. The best engineering recommendation is worthless if it never survives the meeting where the money is allocated.",
+    "category": "Career",
+    "is_demo": true
+  },
+  {
+    "id": "adv-011",
+    "engineer_name": "Priya Shah",
+    "advice": "Do the boring parts of on-call properly: runbooks, dashboards and clean alerts. Heroics during an incident are usually the bill for documentation that nobody wrote when things were calm.",
+    "category": "Career",
+    "is_demo": true
+  },
+  {
+    "id": "adv-012",
+    "engineer_name": "Alex Morgan",
+    "advice": "Before you design for a load, go and stand where the equipment will live. Drawings do not show you the water that collects in the cable trench or the dust that coats a panel every summer.",
+    "category": "Architecture",
+    "is_demo": true
+  },
+  {
+    "id": "adv-013",
+    "engineer_name": "Marcus Obi",
+    "advice": "Deploy on a Tuesday morning, not a Friday afternoon. The code is no different, but the number of people who can help you when it goes wrong is.",
+    "category": "Production",
+    "is_demo": true
+  },
+  {
+    "id": "adv-014",
+    "engineer_name": "Marcus Obi",
+    "advice": "Before you add an alert, decide what a responder should do when it fires at 3am. If you cannot answer that, you are building a notification, not an alert.",
+    "category": "Production",
+    "is_demo": true
+  },
+  {
+    "id": "adv-015",
+    "engineer_name": "Elena Fischer",
+    "advice": "Design the emergency path to expire on its own. Every permission that depends on a human remembering to revoke it will still be there in three years.",
+    "category": "Security",
+    "is_demo": true
+  },
+  {
+    "id": "adv-016",
+    "engineer_name": "Elena Fischer",
+    "advice": "A severity score tells you how bad a flaw is for someone. Only reachability tells you how bad it is for you.",
+    "category": "Security",
+    "is_demo": true
+  },
+  {
+    "id": "adv-017",
+    "engineer_name": "Rohan Iyer",
+    "advice": "Time your migration against production-sized data. Staging tells you the shape of the operation, never its duration.",
+    "category": "Performance",
+    "is_demo": true
+  },
+  {
+    "id": "adv-018",
+    "engineer_name": "Rohan Iyer",
+    "advice": "When a spike is perfectly periodic, stop looking at capacity and start looking at what expires on a schedule.",
+    "category": "Performance",
+    "is_demo": true
+  },
+  {
+    "id": "adv-019",
+    "engineer_name": "Nisha Rao",
+    "advice": "Ask who signed the last version of the safety case, and when the plant last changed. If those two dates are far apart, you have found your next piece of work.",
+    "category": "Leadership",
+    "is_demo": true
+  },
+  {
+    "id": "adv-020",
+    "engineer_name": "Nisha Rao",
+    "advice": "Say the uncomfortable number out loud in the meeting. The cost of being the person who raised it is always lower than the cost of being the person who did not.",
+    "category": "Leadership",
+    "is_demo": true
+  },
+  {
+    "id": "adv-021",
+    "engineer_name": "Tom Bracewell",
+    "advice": "Assert the shape of your data between every stage. A crash is cheap; silently wrong numbers reaching a decision-maker are not.",
+    "category": "Design",
+    "is_demo": true
+  },
+  {
+    "id": "adv-022",
+    "engineer_name": "Tom Bracewell",
+    "advice": "Find out who reads your output and what they decide with it. It changes what you consider a bug.",
+    "category": "Career",
+    "is_demo": true
+  },
+  {
+    "id": "adv-023",
+    "engineer_name": "Priya Shah",
+    "advice": "During an incident, write your assumption in the channel before you act on it. It costs ten seconds and stops three people debugging three different theories.",
+    "category": "Debugging",
+    "is_demo": true
+  },
+  {
+    "id": "adv-024",
+    "engineer_name": "Alex Morgan",
+    "advice": "When you inherit a system, ask what everyone works around. The workarounds map the real faults better than any documentation.",
+    "category": "Debugging",
+    "is_demo": true
+  },
+  {
+    "id": "adv-025",
+    "engineer_name": "Sara Wilson",
+    "advice": "Keep one known-good unit you never modify. When everything is failing, it is the only way to tell whether the problem is the change or the world.",
+    "category": "Debugging",
+    "is_demo": true
+  },
+  {
+    "id": "adv-026",
+    "engineer_name": "Daniel Thomas",
+    "advice": "Write down what would have to be true for your design to be wrong, at the start. Later you will be too invested to think of it.",
+    "category": "Architecture",
+    "is_demo": true
+  },
+  {
+    "id": "adv-027",
+    "engineer_name": "Arjun Mehta",
+    "advice": "Walk the plant floor before reading the report. The report tells you what was measured; the floor tells you what is actually happening.",
+    "category": "Leadership",
+    "is_demo": true
+  },
+  {
+    "id": "adv-028",
+    "engineer_name": "Marcus Obi",
+    "advice": "Practice the recovery, not just the failure. Plenty of teams know how the system breaks and have never once rehearsed putting it back.",
+    "category": "Production",
+    "is_demo": true
+  }
+]

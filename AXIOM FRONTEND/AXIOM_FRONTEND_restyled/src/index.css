@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-feature-settings: "kern" 1;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-serif text-ink;
+  }
+
+  /* Visible keyboard focus everywhere, never removed. */
+  :focus-visible {
+    outline: 2px solid #2f5fd6;
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background: #eaf0fc;
+    color: #0a1f3c;
+  }
+}
+
+@layer components {
+  /* The record sheet: the product's signature layout.
+     A ruled field list with a fixed label column, borrowed from
+     engineering incident report forms. */
+  .record-sheet {
+    @apply border-t border-rule;
+  }
+
+  .record-row {
+    @apply grid gap-x-6 gap-y-1 border-b border-rule py-4 sm:grid-cols-[9.5rem_1fr];
+  }
+
+  .record-label {
+    @apply text-label font-medium uppercase tracking-wide text-ink-3 sm:pt-0.5;
+  }
+
+  .record-value {
+    @apply text-[0.9375rem] leading-relaxed text-ink;
+  }
+
+  .record-value-empty {
+    @apply text-[0.9375rem] italic leading-relaxed text-ink-3;
+  }
+
+  /* Skip link for keyboard users */
+  .skip-link {
+    @apply absolute left-4 top-4 z-50 -translate-y-24 rounded bg-ink px-4 py-2 text-sm text-white transition-transform focus:translate-y-0;
+  }
+
+  /* Colourful gradient hero banner, styled after the reference dashboard */
+  .hero-gradient {
+    @apply rounded-3xl text-white;
+    background: linear-gradient(135deg, #13294b 0%, #2f5fd6 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

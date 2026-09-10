@@ -1,0 +1,1069 @@
+{
+  "org-002": {
+    "vault": [
+      {
+        "id": "vault-m-001",
+        "title": "Checkout service capacity limits & connection budget",
+        "category": "Reliability",
+        "owner": "Priya Shah",
+        "summary": "Documented global budgets for database connections, thread pools and rate limits across the checkout call chain, with peak load test limits.",
+        "confidentiality": "internal",
+        "last_updated": "2026-02-10",
+        "is_demo": true
+      },
+      {
+        "id": "vault-m-002",
+        "title": "Retry and backoff policy standard for distributed services",
+        "category": "Architecture",
+        "owner": "Platform Engineering",
+        "summary": "Edge-only retries, jittered exponential backoff and a global retry budget, written after a retry storm turned a 40 second failover into a 50 minute outage.",
+        "confidentiality": "internal",
+        "last_updated": "2025-12-01",
+        "is_demo": true
+      },
+      {
+        "id": "vault-m-003",
+        "title": "Incident command roles and handover script",
+        "category": "Incident Response",
+        "owner": "Priya Shah",
+        "summary": "Who declares an incident, how command is handed over between time zones, and the exact handover checklist used at shift change.",
+        "confidentiality": "restricted",
+        "last_updated": "2026-05-22",
+        "is_demo": true
+      },
+      {
+        "id": "vault-m-004",
+        "title": "Kubernetes cluster autoscaling & HPA threshold rules",
+        "category": "Infrastructure",
+        "owner": "Marcus Vance",
+        "summary": "Custom HPA metrics configuration using Prometheus query adapter, target CPU utilization thresholds, and node pool scaling buffer limits.",
+        "confidentiality": "internal",
+        "last_updated": "2026-04-12",
+        "is_demo": true
+      },
+      {
+        "id": "vault-m-005",
+        "title": "Database connection pooling & ProxySQL setup guide",
+        "category": "Database",
+        "owner": "Elena Rostova",
+        "summary": "ProxySQL routing rules, frontend/backend connection pool sizing guidelines, and automated query cache TTL settings for high concurrency workloads.",
+        "confidentiality": "internal",
+        "last_updated": "2026-03-18",
+        "is_demo": true
+      },
+      {
+        "id": "vault-m-006",
+        "title": "Disaster recovery multi-region failover runbook",
+        "category": "Security & DR",
+        "owner": "David Chen",
+        "summary": "Step-by-step cross-region DNS failover procedure, read-replica promotion steps, and RTO/RPO SLA validation checklists.",
+        "confidentiality": "restricted",
+        "last_updated": "2026-01-30",
+        "is_demo": true
+      },
+      {
+        "id": "vault-m-007",
+        "title": "Kafka message schema governance & versioning protocol",
+        "category": "Event Streaming",
+        "owner": "Robert Taylor",
+        "summary": "Avro schema compatibility checks, Schema Registry enforcement in CI/CD pipelines, and breaking change deprecation timelines.",
+        "confidentiality": "internal",
+        "last_updated": "2025-11-15",
+        "is_demo": true
+      },
+      {
+        "id": "vault-m-008",
+        "title": "Microservice authentication & JWT token rotation policy",
+        "category": "Security",
+        "owner": "David Chen",
+        "summary": "mTLS mesh certificate renewal routines, RSA-256 JWT key rotation sequence, and zero-trust service-to-service auth standards.",
+        "confidentiality": "restricted",
+        "last_updated": "2026-02-28",
+        "is_demo": true
+      }
+    ],
+    "onboarding": [
+      {
+        "id": "onb-m-001",
+        "week": 1,
+        "title": "Service map and dependency reading",
+        "objective": "Draw the checkout call graph from memory, including every shared downstream resource.",
+        "mentor": "Priya Shah",
+        "resources": [
+          "Service catalogue",
+          "Dependency map"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-m-002",
+        "week": 2,
+        "title": "Development environment & local sandbox setup",
+        "objective": "Build and run the entire microservices stack locally using docker-compose and seed test data.",
+        "mentor": "Marcus Vance",
+        "resources": [
+          "Developer handbook",
+          "Local dev setup guide"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-m-003",
+        "week": 3,
+        "title": "Shadow on-call and incident observation",
+        "objective": "Shadow two on-call shifts and write the incident timeline for any page received.",
+        "mentor": "Platform Engineering",
+        "resources": [
+          "Runbook index",
+          "Incident timeline template"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-m-004",
+        "week": 4,
+        "title": "Code review guidelines & PR verification flow",
+        "objective": "Review 5 pull requests under senior mentor guidance and perform canary deployment check.",
+        "mentor": "Elena Rostova",
+        "resources": [
+          "PR review checklist",
+          "CI pipeline docs"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-m-005",
+        "week": 5,
+        "title": "Production deployment & canary release process",
+        "objective": "Execute a live canary release with progressive traffic shifting and automated rollback monitoring.",
+        "mentor": "Sarah Jenkins",
+        "resources": [
+          "Canary deployment runbook",
+          "Metrics dashboard"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-m-006",
+        "week": 6,
+        "title": "Run a game day & simulated failover",
+        "objective": "Execute a controlled database failover in staging and measure recovery behaviour under retry policy.",
+        "mentor": "Priya Shah",
+        "resources": [
+          "Game day playbook",
+          "Load generation tooling"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-m-007",
+        "week": 8,
+        "title": "Telemetry dashboards & SLO monitoring setup",
+        "objective": "Create custom Grafana dashboards for service latency, error budgets, and saturation metrics.",
+        "mentor": "Sarah Jenkins",
+        "resources": [
+          "Observability standard",
+          "PromQL cheat sheet"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-m-008",
+        "week": 10,
+        "title": "Reverse shadow on-call (Primary Engineer)",
+        "objective": "Act as primary engineer for 1 week with senior mentor shadowing for backup support.",
+        "mentor": "Priya Shah",
+        "resources": [
+          "On-call escalation policy",
+          "Post-mortem guidelines"
+        ],
+        "is_demo": true
+      }
+    ],
+    "troubleshooting": [
+      {
+        "id": "ts-m-001",
+        "symptom": "High latency with healthy CPU and memory",
+        "first_checks": [
+          "Inspect downstream dependency latency",
+          "Check connection pool saturation per pod",
+          "Review database wait events and active connection count"
+        ],
+        "common_causes": [
+          "Connection pool exhaustion",
+          "Lock contention",
+          "Slow downstream dependency"
+        ],
+        "escalate_when": "Pool and dependency metrics look normal and latency stays above the error budget burn threshold.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-m-002",
+        "symptom": "Outage continues after the triggering event has ended",
+        "first_checks": [
+          "Measure request amplification across the call chain",
+          "Check retry counts per hop and whether a retry budget is enforced",
+          "Look for queue growth that outlasts the original fault"
+        ],
+        "common_causes": [
+          "Retry storm",
+          "Thundering herd on cache expiry",
+          "Cascading queue collapse"
+        ],
+        "escalate_when": "Traffic rate stays elevated after client retries stop.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-m-003",
+        "symptom": "MySQL deadlocks under concurrent batch updates",
+        "first_checks": [
+          "Check SHOW ENGINE INNODB STATUS for recent deadlock graphs",
+          "Verify foreign key index coverage on updating tables",
+          "Inspect transaction isolation levels and lock wait timeout settings"
+        ],
+        "common_causes": [
+          "Unindexed foreign key columns causing table scans",
+          "Inconsistent lock acquisition ordering across worker threads",
+          "Long-running transactions holding row locks"
+        ],
+        "escalate_when": "Deadlock count exceeds 5 per minute or causes user transaction failure spikes.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-m-004",
+        "symptom": "Redis cache eviction spike & thundering herd",
+        "first_checks": [
+          "Check Redis memory usage and evicted_keys metric",
+          "Verify TTL jitter configuration on cached items",
+          "Inspect backend DB query spikes matching evicted cache keys"
+        ],
+        "common_causes": [
+          "Bulk expiration of cache keys without random jitter",
+          "Maxmemory policy set to volatile-lru instead of allkeys-lru",
+          "Large hot key access spike during sale event"
+        ],
+        "escalate_when": "Cache hit ratio drops below 80% and database CPU exceeds 85%.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-m-005",
+        "symptom": "Kafka consumer group lag accumulation during peak hours",
+        "first_checks": [
+          "Inspect kafka_consumergroup_lag per partition",
+          "Check consumer pod CPU utilization and garbage collection pauses",
+          "Verify partition count matches active consumer thread count"
+        ],
+        "common_causes": [
+          "Under-partitioned topic limiting consumer parallelism",
+          "Blocking HTTP call inside message processing loop",
+          "Consumer rebalance loop triggered by heartbeat timeout"
+        ],
+        "escalate_when": "Consumer lag exceeds 100,000 messages and processing latency breaches 5 minutes.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-m-006",
+        "symptom": "Pod CrashLoopBackOff due to OOMKilled in Kubernetes",
+        "first_checks": [
+          "Run kubectl describe pod and check last state termination reason",
+          "Review memory metrics history prior to pod termination",
+          "Check heap dump or memory profiler logs"
+        ],
+        "common_causes": [
+          "Memory leak in unclosed HTTP connection streams",
+          "Container memory limit set lower than JVM maximum heap size",
+          "Unbounded in-memory caching of large payload responses"
+        ],
+        "escalate_when": "More than 20% of service pods enter CrashLoopBackOff simultaneously.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-m-007",
+        "symptom": "SSL certificate expiration & upstream TLS handshake failures",
+        "first_checks": [
+          "Inspect cert-manager certificate status and expiration date",
+          "Check ingress controller logs for TLS handshake error codes",
+          "Verify intermediate CA chain completeness"
+        ],
+        "common_causes": [
+          "Automated Let's Encrypt ACME challenge failure due to firewall rule",
+          "Expired internal root CA certificate in trust store",
+          "Mismatched SNI hostname configuration"
+        ],
+        "escalate_when": "TLS errors affect external customer traffic or public API gateways.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-m-008",
+        "symptom": "DNS resolution timeouts under high VPC connection load",
+        "first_checks": [
+          "Check CoreDNS pod log files for query timeout warnings",
+          "Inspect local NodeLocal DNSCache pod status and metrics",
+          "Verify AWS Route53 resolver ENI connection limits"
+        ],
+        "common_causes": [
+          "CoreDNS pod CPU throttling during traffic spikes",
+          "UDP packet drop due to socket buffer overflow",
+          "Excessive external DNS lookups without local caching"
+        ],
+        "escalate_when": "DNS lookup latency exceeds 50ms across multiple node pools.",
+        "is_demo": true
+      }
+    ],
+    "postmortems": [
+      {
+        "id": "pm-m-001",
+        "title": "2026-01-15 Checkout service connection pool exhaustion",
+        "date": "2026-01-15",
+        "status": "closed",
+        "impact": "45 minute degradation on checkout flow affecting 8% of transactions during evening peak.",
+        "root_cause": "A slow third-party payment gateway call held open database connections in the main request thread until worker pools were exhausted.",
+        "corrective_actions": [
+          "Isolated payment gateway calls into an asynchronous background queue",
+          "Enforced strict 2-second HTTP timeouts on all external integrations",
+          "Implemented ProxySQL pool limits to cap per-service DB connections"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-m-002",
+        "title": "2025-11-20 Global DNS routing misconfiguration during migration",
+        "date": "2025-11-20",
+        "status": "closed",
+        "impact": "18 minutes of 502 errors for APAC traffic during cross-region traffic migration.",
+        "root_cause": "Route53 weighted routing record update omitted the health check association, routing traffic to an unprimed secondary cluster.",
+        "corrective_actions": [
+          "Added automated Terraform validation for DNS health check bindings",
+          "Enforced canary DNS weight shifting (5% -> 25% -> 100%)",
+          "Updated regional failover runbook with double-confirmation checklist"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-m-003",
+        "title": "2025-08-14 Redis cluster failover cascade during traffic surge",
+        "date": "2025-08-14",
+        "status": "closed",
+        "impact": "32 minute outage on user session authentication during promotional campaign.",
+        "root_cause": "Primary Redis node OOM panic triggered failover while replica was loading snapshot, creating a failover loop.",
+        "corrective_actions": [
+          "Upgraded Redis cluster nodes to double memory capacity",
+          "Configured maxmemory-policy allkeys-lru with strict eviction limits",
+          "Added session fallback store in DynamoDB for auth redundancy"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-m-004",
+        "title": "2025-05-02 Unindexed query lock contention in payments DB",
+        "date": "2025-05-02",
+        "status": "closed",
+        "impact": "22 minute latency spike on payment settlement processing.",
+        "root_cause": "A newly deployed reporting query performed a full table scan on the transactions table, acquiring exclusive gap locks.",
+        "corrective_actions": [
+          "Created composite index on (tenant_id, status, created_at)",
+          "Enforced read-only replica routing for all reporting and analytics queries",
+          "Added automated index verification check to CI database migration linter"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-m-005",
+        "title": "2025-02-18 Kafka broker disk saturation outage",
+        "date": "2025-02-18",
+        "status": "closed",
+        "impact": "14 minutes of delayed event logging and real-time analytics stream backlog.",
+        "root_cause": "Topic retention policy misconfiguration set log retention to 30 days instead of 7 days on high-throughput audit topic.",
+        "corrective_actions": [
+          "Standardized Kafka topic retention policies via GitOps infrastructure code",
+          "Configured disk usage alert firing at 75% capacity",
+          "Implemented automated segment deletion script for emergency disk cleanup"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-m-006",
+        "title": "2024-12-10 Ingress gateway memory leak after config reload",
+        "date": "2024-12-10",
+        "status": "closed",
+        "impact": "Intermittent 503 gateway errors over 2 hours during continuous delivery deployments.",
+        "root_cause": "Lua plugin in Envoy proxy failed to release memory references upon dynamic route configuration reload.",
+        "corrective_actions": [
+          "Patched Envoy ingress gateway to latest stable release",
+          "Replaced custom Lua plugin with native Rust Wasm filter",
+          "Added memory growth anomaly detector to ingress gateway alerting"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-m-007",
+        "title": "2024-09-05 Third-party API rate limit cascade during promo sale",
+        "date": "2024-09-05",
+        "status": "closed",
+        "impact": "35 minute shopping cart checkout disruption affecting international orders.",
+        "root_cause": "Address verification vendor enforced an undocumented 100 req/sec rate limit without returning HTTP 429 retry-after headers.",
+        "corrective_actions": [
+          "Implemented client-side token bucket rate limiter for external vendor APIs",
+          "Added graceful fallback to skip address verification during vendor outages",
+          "Renegotiated enterprise SLA with vendor to support 1,000 req/sec peak"
+        ],
+        "is_demo": true
+      }
+    ],
+    "retirement": [
+      {
+        "id": "ret-m-001",
+        "engineer": "Priya Shah",
+        "role": "Principal Systems Architect",
+        "years_experience": 18,
+        "capture_status": "in_progress",
+        "critical_knowledge_areas": [
+          "Checkout Call Graph",
+          "Distributed Transaction Boundaries",
+          "Disaster Recovery Protocols",
+          "Incident Command Handover"
+        ],
+        "sessions_recorded": 7,
+        "sessions_target": 10,
+        "successor": "Arjun Mehta (Staff Engineer)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-m-002",
+        "engineer": "Marcus Vance",
+        "role": "Staff Infrastructure Engineer",
+        "years_experience": 22,
+        "capture_status": "in_progress",
+        "critical_knowledge_areas": [
+          "Kubernetes Autoscaling Topology",
+          "CoreDNS & NodeLocal DNSCache",
+          "Terraform Infrastructure Codebase"
+        ],
+        "sessions_recorded": 5,
+        "sessions_target": 8,
+        "successor": "Li Wei (Senior DevOps Engineer)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-m-003",
+        "engineer": "Elena Rostova",
+        "role": "Lead Database Specialist",
+        "years_experience": 16,
+        "capture_status": "completed",
+        "critical_knowledge_areas": [
+          "MySQL ProxySQL Connection Pooling",
+          "InnoDB Lock Contention Tuning",
+          "Cross-Region DB Replication"
+        ],
+        "sessions_recorded": 8,
+        "sessions_target": 8,
+        "successor": "Karthik Raja (Senior Database Engineer)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-m-004",
+        "engineer": "David Chen",
+        "role": "Principal Network & Security Engineer",
+        "years_experience": 20,
+        "capture_status": "in_progress",
+        "critical_knowledge_areas": [
+          "mTLS Mesh Certificate Rotation",
+          "Edge Ingress Security Rules",
+          "Multi-Region VPC Peering"
+        ],
+        "sessions_recorded": 6,
+        "sessions_target": 9,
+        "successor": "Hannah Abbott (Senior Security Specialist)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-m-005",
+        "engineer": "Sarah Jenkins",
+        "role": "Staff Reliability Specialist",
+        "years_experience": 15,
+        "capture_status": "in_progress",
+        "critical_knowledge_areas": [
+          "SLO Error Budget Calculation",
+          "Prometheus Telemetry Pipeline",
+          "Canary Deployment Automation"
+        ],
+        "sessions_recorded": 4,
+        "sessions_target": 7,
+        "successor": "Devon Miller (SRE Lead)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-m-006",
+        "engineer": "Robert Taylor",
+        "role": "Lead Distributed Systems Engineer",
+        "years_experience": 19,
+        "capture_status": "completed",
+        "critical_knowledge_areas": [
+          "Kafka Schema Registry Protocol",
+          "Event Driven Architecture",
+          "Consumer Group Partitioning"
+        ],
+        "sessions_recorded": 8,
+        "sessions_target": 8,
+        "successor": "Mei-Ling Zhou (Senior Backend Engineer)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-m-007",
+        "engineer": "Anita Desai",
+        "role": "Principal Storage Engineer",
+        "years_experience": 17,
+        "capture_status": "in_progress",
+        "critical_knowledge_areas": [
+          "Object Storage Lifecycle Rules",
+          "Backup Encryption & Verification",
+          "High Throughput SAN Config"
+        ],
+        "sessions_recorded": 5,
+        "sessions_target": 8,
+        "successor": "Vikram Malhotra (Senior Infrastructure Lead)",
+        "is_demo": true
+      }
+    ],
+    "kri": {
+      "organization": "Meridian Cloud Labs",
+      "description": "High-priority telemetry signals of operational knowledge vulnerability across infrastructure and application teams.",
+      "indicators": [
+        {
+          "id": "kri-m-001",
+          "name": "Single-Point-of-Failure Systems",
+          "value": 28,
+          "unit": "percent",
+          "risk_level": "high",
+          "note": "28% of critical production microservices rely on institutional knowledge held by a single senior engineer."
+        },
+        {
+          "id": "kri-m-002",
+          "name": "Bus Factor Alert Ratio",
+          "value": 35,
+          "unit": "percent",
+          "risk_level": "medium",
+          "note": "35% of core system modules have a bus factor of 1 or 2 engineers."
+        },
+        {
+          "id": "kri-m-003",
+          "name": "Undocumented Legacy Services",
+          "value": 12,
+          "unit": "percent",
+          "risk_level": "low",
+          "note": "12% of active legacy services lack comprehensive runbooks and dependency maps."
+        },
+        {
+          "id": "kri-m-004",
+          "name": "Retirement Knowledge Risk Index",
+          "value": 42,
+          "unit": "percent",
+          "risk_level": "high",
+          "note": "42% of total target knowledge transfer sessions remain uncaptured for senior engineers retiring within 18 months."
+        },
+        {
+          "id": "kri-m-005",
+          "name": "Unverified Runbook Ratio",
+          "value": 18,
+          "unit": "percent",
+          "risk_level": "medium",
+          "note": "18% of incident troubleshooting runbooks have not been tested in game days within the last 90 days."
+        },
+        {
+          "id": "kri-m-006",
+          "name": "Incident Knowledge Capture Rate",
+          "value": 88,
+          "unit": "percent",
+          "risk_level": "low",
+          "note": "88% of Sev-1 and Sev-2 incidents result in documented post-mortems and verified corrective action items."
+        },
+        {
+          "id": "kri-m-007",
+          "name": "Cross-Training Deficit",
+          "value": 31,
+          "unit": "percent",
+          "risk_level": "medium",
+          "note": "31% of junior and mid-level engineers report insufficient hands-on mentorship on tier-1 incident response."
+        }
+      ]
+    },
+    "dashboard": {
+      "organization": "Meridian Cloud Labs",
+      "note": "Executive dashboard telemetry summarizing private knowledge vault assets, incident response coverage, and senior staff retirement transfer progress.",
+      "total_vault_assets": 8,
+      "onboarding_modules": 8,
+      "troubleshooting_runbooks": 8,
+      "closed_postmortems": 7,
+      "senior_engineers_at_risk": 7,
+      "knowledge_transfer_completion": "76%",
+      "kri_telemetry_health_score": "82 / 100",
+      "active_mentorship_tracks": 7
+    }
+  },
+  "org-003": {
+    "vault": [
+      {
+        "id": "vault-n-001",
+        "title": "Grid frequency telemetry pipeline architecture",
+        "category": "Architecture",
+        "owner": "Siddharth Rao",
+        "summary": "Design specifications for sub-second grid telemetry ingestion using MQTT gateways and Apache Flink stream processing.",
+        "confidentiality": "internal",
+        "last_updated": "2026-03-05",
+        "is_demo": true
+      },
+      {
+        "id": "vault-n-002",
+        "title": "Transformer differential relay protection guidelines",
+        "category": "Power Systems",
+        "owner": "Power Engineering",
+        "summary": "Field guidelines for diagnosing CT secondary circuit unbalance and differential relay trip causes during heavy rainfall.",
+        "confidentiality": "internal",
+        "last_updated": "2026-01-20",
+        "is_demo": true
+      },
+      {
+        "id": "vault-n-003",
+        "title": "SCADA protocol gateway security & air-gap specification",
+        "category": "Security",
+        "owner": "Security Team",
+        "summary": "IEC 60870-5-104 and DNP3 gateway isolation protocol, unidirectional data diodes, and jump box access controls.",
+        "confidentiality": "restricted",
+        "last_updated": "2026-04-15",
+        "is_demo": true
+      },
+      {
+        "id": "vault-n-004",
+        "title": "Substation IoT sensor calibration & firmware updates",
+        "category": "Hardware",
+        "owner": "Hardware Operations",
+        "summary": "Over-the-air firmware deployment protocol, cryptographic payload signing, and sensor drift compensation algorithms.",
+        "confidentiality": "internal",
+        "last_updated": "2026-02-14",
+        "is_demo": true
+      },
+      {
+        "id": "vault-n-005",
+        "title": "High-voltage circuit breaker maintenance telemetry",
+        "category": "Maintenance",
+        "owner": "Field Engineering",
+        "summary": "Acoustic vibration profiling and SF6 gas pressure monitoring standards for predicting breaker contact wear.",
+        "confidentiality": "internal",
+        "last_updated": "2025-12-10",
+        "is_demo": true
+      },
+      {
+        "id": "vault-n-006",
+        "title": "Energy storage battery management system (BMS) safety protocol",
+        "category": "Energy Storage",
+        "owner": "Siddharth Rao",
+        "summary": "Thermal runaway containment procedures, cell voltage balancing algorithms, and emergency shutdown interlocks.",
+        "confidentiality": "restricted",
+        "last_updated": "2026-05-01",
+        "is_demo": true
+      },
+      {
+        "id": "vault-n-007",
+        "title": "Smart grid distribution automation & self-healing network",
+        "category": "Smart Grid",
+        "owner": "Grid Operations",
+        "summary": "FLISR (Fault Location, Isolation, and Service Restoration) logic rules for automated feeder switching.",
+        "confidentiality": "internal",
+        "last_updated": "2026-03-30",
+        "is_demo": true
+      }
+    ],
+    "onboarding": [
+      {
+        "id": "onb-n-001",
+        "week": 1,
+        "title": "Substation single-line diagram reading",
+        "objective": "Understand transmission substation topology, busbar arrangements, and protection zones.",
+        "mentor": "Siddharth Rao",
+        "resources": [
+          "Single-line diagrams",
+          "Protection zone standards"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-n-002",
+        "week": 2,
+        "title": "SCADA protocols and MODBUS/DNP3 telemetry",
+        "objective": "Configure local DNP3 polling master and inspect analog/binary input telemetry frames.",
+        "mentor": "Power Engineering",
+        "resources": [
+          "DNP3 specification",
+          "Protocol analyzer tools"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-n-003",
+        "week": 4,
+        "title": "Relay testing and secondary injection",
+        "objective": "Perform secondary current injection tests on digital protective relays in test bench environment.",
+        "mentor": "Field Operations",
+        "resources": [
+          "Relay test set manual",
+          "Injection test safety procedures"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-n-004",
+        "week": 6,
+        "title": "Grid outage simulation and islanding recovery",
+        "objective": "Execute simulated microgrid islanding and black-start synchronization procedure.",
+        "mentor": "Siddharth Rao",
+        "resources": [
+          "Black-start playbook",
+          "Grid simulator"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-n-005",
+        "week": 8,
+        "title": "Real-time stream processing with Apache Flink",
+        "objective": "Write Flink windowed aggregation jobs for sub-second power frequency calculation.",
+        "mentor": "Streaming Team",
+        "resources": [
+          "Flink developer guide",
+          "Telemetry pipeline repo"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "onb-n-006",
+        "week": 10,
+        "title": "Substation field safety & High-Voltage certification",
+        "objective": "Complete safety training for entering live 220kV switchyards and operating disconnect switches.",
+        "mentor": "Safety Director",
+        "resources": [
+          "HV safety manual",
+          "PPE compliance guide"
+        ],
+        "is_demo": true
+      }
+    ],
+    "troubleshooting": [
+      {
+        "id": "ts-n-001",
+        "symptom": "Intermittent differential protection relay trips during heavy rain",
+        "first_checks": [
+          "Inspect marshalling kiosk cable glands for water ingress",
+          "Measure CT secondary circuit resistance and unbalance",
+          "Correlate trip timestamps against local rainfall and load curve"
+        ],
+        "common_causes": [
+          "Cracked cable gland permitting moisture entry into marshalling box",
+          "Intermittent CT secondary short-circuit",
+          "Moisture-induced insulation degradation"
+        ],
+        "escalate_when": "CT secondary unbalance persists after kiosk resealing.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-n-002",
+        "symptom": "SCADA polling gaps and telemetry packet loss",
+        "first_checks": [
+          "Inspect serial-to-Ethernet gateway latency",
+          "Verify DNP3 response timeout and retry counts",
+          "Check cellular router signal quality (RSSI/RSRP) at remote substation"
+        ],
+        "common_causes": [
+          "Cellular modem signal degradation during adverse weather",
+          "Buffer overflow on serial communication card",
+          "Unbounded DNP3 retries clogging narrow band channel"
+        ],
+        "escalate_when": "Telemetry drop exceeds 15 minutes on transmission tie-lines.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-n-003",
+        "symptom": "Grid frequency telemetry jitter in Flink pipeline",
+        "first_checks": [
+          "Check MQTT broker incoming packet rate and socket buffer queue",
+          "Verify Flink task manager garbage collection pause times",
+          "Inspect NTP time synchronization drift across telemetry gateways"
+        ],
+        "common_causes": [
+          "NTP clock drift exceeding 50ms on edge gateways",
+          "Flink window size set smaller than maximum network jitter",
+          "MQTT message backlog on partition leader"
+        ],
+        "escalate_when": "Sub-second frequency calculation delay exceeds 2 seconds.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-n-004",
+        "symptom": "Battery energy storage system (BESS) thermal warning",
+        "first_checks": [
+          "Check coolant pump flow rate and chiller temperature",
+          "Inspect individual cell voltage and temperature sensors for outliers",
+          "Verify ambient HVAC operation in battery enclosure"
+        ],
+        "common_causes": [
+          "Coolant line air lock reducing thermal dissipation",
+          "Cell internal resistance imbalance causing localized heating",
+          "HVAC filter clogging in desert environment"
+        ],
+        "escalate_when": "Cell temperature exceeds 45°C or rate of temperature rise exceeds 2°C/min.",
+        "is_demo": true
+      },
+      {
+        "id": "ts-n-005",
+        "symptom": "SF6 gas pressure low alarm on 220kV circuit breaker",
+        "first_checks": [
+          "Read density monitor gauge and compensate for ambient temperature",
+          "Inspect gas piping joints and pressure relief valves for leaks",
+          "Check breaker trip interlock circuit status"
+        ],
+        "common_causes": [
+          "Valve seal degradation due to thermal expansion cycles",
+          "Slow micro-leakage in pressure sensor fitting",
+          "Temperature compensation circuit failure"
+        ],
+        "escalate_when": "Gas pressure drops below stage-2 lockout threshold (4.5 bar).",
+        "is_demo": true
+      },
+      {
+        "id": "ts-n-006",
+        "symptom": "Auto-recloser lockout after transient lightning fault",
+        "first_checks": [
+          "Read event record and fault location distance calculation from relay",
+          "Inspect overhead line surge arresters and insulator strings",
+          "Check recloser reclosure attempt counter and sequence timer"
+        ],
+        "common_causes": [
+          "Permanent line fault (tree branch contact)",
+          "Surge arrester failure causing permanent ground fault",
+          "Recloser timing sequence misconfiguration"
+        ],
+        "escalate_when": "Line fails to reclose after 3 automatic attempts.",
+        "is_demo": true
+      }
+    ],
+    "postmortems": [
+      {
+        "id": "pm-n-001",
+        "title": "2025-10-12 Intermittent 220kV transformer differential trips",
+        "date": "2025-10-12",
+        "status": "closed",
+        "impact": "Three unplanned transformer trips over 3 weeks during evening load peak.",
+        "root_cause": "Cracked cable gland in marshalling kiosk allowed rainwater ingress, intermittently shorting CT secondary wiring.",
+        "corrective_actions": [
+          "Replaced damaged cable gland and re-sealed marshalling kiosk enclosure",
+          "Added weather correlation plotting protocol to initial troubleshooting checklist",
+          "Cancelled planned $45k transformer oil analysis outage after root cause confirmation"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-n-002",
+        "title": "2025-06-04 SCADA master gateway failover telemetry gap",
+        "date": "2025-06-04",
+        "status": "closed",
+        "impact": "12 minute loss of real-time substation monitoring during storm front.",
+        "root_cause": "Primary SCADA server virtual machine memory exhaustion triggered failover before secondary standby DB state was synchronized.",
+        "corrective_actions": [
+          "Implemented hot-standby active-active state replication for SCADA gateways",
+          "Increased virtual machine RAM allocation from 16GB to 64GB",
+          "Added automated heart-beat health check with 3-second failover threshold"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-n-003",
+        "title": "2025-01-22 Battery storage inverter trip during frequency response",
+        "date": "2025-01-22",
+        "status": "closed",
+        "impact": "20MW rapid frequency response capacity unavailable for 25 minutes during grid frequency dip.",
+        "root_cause": "DC bus over-voltage protection trip caused by aggressive inverter ramp rate setting under low grid impedance.",
+        "corrective_actions": [
+          "Tuned inverter active power dP/dt ramp rate limiters",
+          "Updated battery management system firmware to v4.2.1",
+          "Conducted hardware-in-the-loop simulation tests for extreme grid frequency events"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-n-004",
+        "title": "2024-08-30 Solar farm feeder over-voltage protection trip",
+        "date": "2024-08-30",
+        "status": "closed",
+        "impact": "50MW solar generation curtailment during peak midday generation.",
+        "root_cause": "Distribution grid voltage rise at tap changer limit due to cloud cover clearing combined with light local load.",
+        "corrective_actions": [
+          "Enabled dynamic reactive power (Volt-VAR) control on solar inverters",
+          "Updated substation transformer automatic tap changer response curve",
+          "Integrated solar irradiance forecast feed into SCADA voltage control loop"
+        ],
+        "is_demo": true
+      },
+      {
+        "id": "pm-n-005",
+        "title": "2024-04-18 Substation optical fiber ground wire (OPGW) break",
+        "date": "2024-04-18",
+        "status": "closed",
+        "impact": "Loss of differential protection channel between Substation A and Substation B.",
+        "root_cause": "Physical OPGW fiber damage caused by storm-driven tree branch impact on span 42.",
+        "corrective_actions": [
+          "Spliced damaged OPGW optical fibers and restored channel in 4 hours",
+          "Activated backup microwave communications link for protection signaling",
+          "Trimmed right-of-way vegetation along 15km transmission corridor"
+        ],
+        "is_demo": true
+      }
+    ],
+    "retirement": [
+      {
+        "id": "ret-n-001",
+        "engineer": "Siddharth Rao",
+        "role": "Chief Power Systems Engineer",
+        "years_experience": 24,
+        "capture_status": "in_progress",
+        "critical_knowledge_areas": [
+          "Transformer Differential Protection",
+          "Marshalling Kiosk Weather Diagnostics",
+          "Substation Single-Line Topology"
+        ],
+        "sessions_recorded": 6,
+        "sessions_target": 8,
+        "successor": "Ananya Sharma (Senior Protection Engineer)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-n-002",
+        "engineer": "James Thorne",
+        "role": "Principal SCADA Architect",
+        "years_experience": 21,
+        "capture_status": "completed",
+        "critical_knowledge_areas": [
+          "DNP3 & MODBUS Protocol Gateways",
+          "Substation Air-Gap Security",
+          "SCADA Active-Active Failover"
+        ],
+        "sessions_recorded": 8,
+        "sessions_target": 8,
+        "successor": "David Zhang (Senior Automation Lead)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-n-003",
+        "engineer": "Ramesh Patel",
+        "role": "Lead High-Voltage Equipment Specialist",
+        "years_experience": 26,
+        "capture_status": "in_progress",
+        "critical_knowledge_areas": [
+          "220kV Circuit Breaker Maintenance",
+          "SF6 Gas Density Diagnostics",
+          "Acoustic Vibration Profiling"
+        ],
+        "sessions_recorded": 5,
+        "sessions_target": 7,
+        "successor": "Karthik Nair (HV Field Specialist)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-n-004",
+        "engineer": "Clara Lindqvist",
+        "role": "Principal Smart Grid & Storage Engineer",
+        "years_experience": 19,
+        "capture_status": "in_progress",
+        "critical_knowledge_areas": [
+          "Battery Management System Interlocks",
+          "FLISR Distribution Automation",
+          "Microgrid Black-Start Synchronization"
+        ],
+        "sessions_recorded": 4,
+        "sessions_target": 8,
+        "successor": "Nikhil Varma (Grid Energy Systems Lead)",
+        "is_demo": true
+      },
+      {
+        "id": "ret-n-005",
+        "engineer": "Michael O'Connor",
+        "role": "Lead Transmission Line Specialist",
+        "years_experience": 23,
+        "capture_status": "completed",
+        "critical_knowledge_areas": [
+          "OPGW Optical Fiber Splicing",
+          "Transmission Corridor Right-of-Way",
+          "Surge Arrester Diagnostics"
+        ],
+        "sessions_recorded": 6,
+        "sessions_target": 6,
+        "successor": "Brian Hayes (Senior Transmission Engineer)",
+        "is_demo": true
+      }
+    ],
+    "kri": {
+      "organization": "Northstar Engineering",
+      "description": "High-priority signals of operational knowledge vulnerability across power transmission, substation automation, and smart grid teams.",
+      "indicators": [
+        {
+          "id": "kri-n-001",
+          "name": "Single-Point-of-Failure Systems",
+          "value": 22,
+          "unit": "percent",
+          "risk_level": "medium",
+          "note": "22% of critical substation telemetry feeds rely exclusively on legacy protocol knowledge held by senior engineers."
+        },
+        {
+          "id": "kri-n-002",
+          "name": "Bus Factor Alert Ratio",
+          "value": 30,
+          "unit": "percent",
+          "risk_level": "medium",
+          "note": "30% of power system protection schemes have a bus factor of 1 senior specialist."
+        },
+        {
+          "id": "kri-n-003",
+          "name": "Undocumented Legacy Services",
+          "value": 15,
+          "unit": "percent",
+          "risk_level": "low",
+          "note": "15% of older substation marshalling kiosks lack updated wiring schematics."
+        },
+        {
+          "id": "kri-n-004",
+          "name": "Retirement Knowledge Risk Index",
+          "value": 38,
+          "unit": "percent",
+          "risk_level": "high",
+          "note": "38% of targeted knowledge transfer sessions remain uncaptured for senior engineers retiring within 2 years."
+        },
+        {
+          "id": "kri-n-005",
+          "name": "Unverified Runbook Ratio",
+          "value": 14,
+          "unit": "percent",
+          "risk_level": "low",
+          "note": "14% of high-voltage field procedures require updated safety validation tests."
+        },
+        {
+          "id": "kri-n-006",
+          "name": "Incident Knowledge Capture Rate",
+          "value": 92,
+          "unit": "percent",
+          "risk_level": "low",
+          "note": "92% of transmission line and transformer trip incidents result in verified post-mortem documentation."
+        }
+      ]
+    },
+    "dashboard": {
+      "organization": "Northstar Engineering",
+      "note": "Executive dashboard telemetry summarizing power systems vault assets, grid troubleshooting runbooks, and senior staff retirement transfer progress.",
+      "total_vault_assets": 7,
+      "onboarding_modules": 6,
+      "troubleshooting_runbooks": 6,
+      "closed_postmortems": 5,
+      "senior_engineers_at_risk": 5,
+      "knowledge_transfer_completion": "79%",
+      "kri_telemetry_health_score": "86 / 100",
+      "active_mentorship_tracks": 5
+    }
+  }
+}

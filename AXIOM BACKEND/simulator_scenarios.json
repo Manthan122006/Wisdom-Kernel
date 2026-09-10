@@ -1,0 +1,532 @@
+[
+  {
+    "id": "incident-001",
+    "title": "Production API Error Spike",
+    "description": "At 19:40 on a sale day, the checkout API starts returning 5xx errors for about 12% of requests. Latency p99 has gone from 180ms to 9s. CPU and memory on the service pods look normal. You are the on-call engineer.",
+    "difficulty": "Intermediate",
+    "domain": "Distributed Systems",
+    "estimated_minutes": 6,
+    "steps": [
+      {
+        "id": "step-1",
+        "question": "What would you check first?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Immediately double the number of service replicas to absorb the traffic.",
+            "correct": false,
+            "feedback": "Scaling first is a common reflex, but CPU and memory are healthy. If the service is blocked on a shared downstream resource, more replicas increase contention and can make latency worse."
+          },
+          {
+            "id": "B",
+            "text": "Look at where request time is actually being spent: downstream dependency latency, connection pool saturation and database wait events.",
+            "correct": true,
+            "feedback": "Correct. Healthy CPU with terrible latency means the service is waiting, not computing. Locating the wait is the only thing that tells you which remedy applies."
+          },
+          {
+            "id": "C",
+            "text": "Roll back the most recent deployment straight away.",
+            "correct": false,
+            "feedback": "Rollback is a reasonable tool when a deploy correlates in time with the incident, but nothing here points to a release yet. Rolling back blindly can destroy evidence and may not touch the cause."
+          },
+          {
+            "id": "D",
+            "text": "Restart the pods to clear any bad state.",
+            "correct": false,
+            "feedback": "A restart can briefly mask symptoms and reset the very state you need to diagnose. It also drops in-flight requests during an already degraded period."
+          }
+        ],
+        "stage": "01 OBSERVE"
+      },
+      {
+        "id": "step-2",
+        "question": "Metrics show each pod's database connection pool is fully saturated and the database is refusing new connections. What is the safest immediate action?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Raise the per-pod connection pool size so each pod can open more connections.",
+            "correct": false,
+            "feedback": "This points the pressure straight at the constraint. The database is already refusing connections, so asking for more per pod makes queueing and timeouts worse."
+          },
+          {
+            "id": "B",
+            "text": "Reduce per-pod pool size and put a connection proxy in front of the database so total connections stay within its limit.",
+            "correct": true,
+            "feedback": "Correct. Total connections are a shared global budget. Bounding them and multiplexing through a proxy lets existing connections do useful work instead of queueing."
+          },
+          {
+            "id": "C",
+            "text": "Add more replicas now that you know the database is the bottleneck.",
+            "correct": false,
+            "feedback": "Each new replica brings its own pool, multiplying the number of connections against a limit you have already exceeded."
+          },
+          {
+            "id": "D",
+            "text": "Fail over to the standby database node.",
+            "correct": false,
+            "feedback": "The database is not faulty, it is saturated by connection count. A failover would move the same load onto a cold node and add a failover window on top of the incident."
+          }
+        ],
+        "stage": "02 INVESTIGATE"
+      },
+      {
+        "id": "step-3",
+        "question": "The incident is mitigated and traffic is normal. What is the most valuable follow-up?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Close the incident, since the metrics have recovered.",
+            "correct": false,
+            "feedback": "The mitigation is in place but the system will behave the same way in the next peak unless the limits are made explicit and tested."
+          },
+          {
+            "id": "B",
+            "text": "Document the total connection budget, add an alert on pool saturation, and load test at the sale-day traffic multiple.",
+            "correct": true,
+            "feedback": "Correct. The failure was an invisible shared limit. Making it explicit, alerting before saturation, and testing at realistic peak turns a repeat incident into a known constraint."
+          },
+          {
+            "id": "C",
+            "text": "Add automatic retries on checkout calls so users see fewer errors next time.",
+            "correct": false,
+            "feedback": "Retrying into a saturated dependency amplifies load and lengthens the outage. Retries need a global budget and backoff, and they do not address the connection limit."
+          },
+          {
+            "id": "D",
+            "text": "Permanently run four times the replica count so capacity is never a problem.",
+            "correct": false,
+            "feedback": "This raises cost and, given the connection multiplication you just diagnosed, actively increases the risk of the same failure."
+          }
+        ],
+        "stage": "03 DECIDE"
+      }
+    ],
+    "senior_reasoning": "An experienced responder separates saturation from failure. Normal CPU with very high latency is a waiting problem, so the first job is to find what the requests are waiting on. Once the wait is identified as a shared, bounded resource, the rule is to bound demand on it rather than add more consumers. Only after the system is stable is it worth making the invisible limit explicit through documentation, alerting and load testing.",
+    "lesson": "Find the bottleneck before adding capacity. Shared resources such as database connections are a global budget, and scaling consumers can multiply demand on that budget instead of relieving it.",
+    "is_demo": true
+  },
+  {
+    "id": "incident-002",
+    "title": "Substation Transformer Tripping After Rain",
+    "description": "A 220/33kV transformer trips on differential protection about twice a week. Every trip has happened after heavy rain, during the 18:00 to 21:00 load peak. Oil temperature and load current are within normal limits. You are the substation engineer on duty.",
+    "difficulty": "Advanced",
+    "domain": "Power Distribution",
+    "estimated_minutes": 6,
+    "steps": [
+      {
+        "id": "step-1",
+        "question": "The trips correlate with rain and evening peak. What does that pattern most strongly suggest?",
+        "options": [
+          {
+            "id": "A",
+            "text": "An internal winding fault developing inside the transformer.",
+            "correct": false,
+            "feedback": "An internal winding fault does not wait for rain or for a particular hour of the day. A strong environmental correlation argues against a fault inside the tank."
+          },
+          {
+            "id": "B",
+            "text": "A moisture-related problem in the secondary wiring or enclosures feeding the protection scheme.",
+            "correct": true,
+            "feedback": "Correct. Weather correlation points at enclosures, glands and secondary circuits. Differential protection needs only one CT secondary to misbehave to operate falsely."
+          },
+          {
+            "id": "C",
+            "text": "Normal overload behaviour during the evening peak.",
+            "correct": false,
+            "feedback": "Load current is within limits, and overload would act through thermal protection rather than differential protection."
+          },
+          {
+            "id": "D",
+            "text": "A relay firmware defect that should be patched immediately.",
+            "correct": false,
+            "feedback": "Possible in principle, but a firmware defect would not track rainfall. Chase the environmental correlation before suspecting the relay logic."
+          }
+        ],
+        "stage": "01 OBSERVE"
+      },
+      {
+        "id": "step-2",
+        "question": "You have a short outage window. What do you inspect first?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Schedule an oil sample and dissolved gas analysis on the transformer.",
+            "correct": false,
+            "feedback": "DGA is valuable when an internal fault is suspected, but it is slow and expensive and the evidence here points outside the tank. It is worth doing later as confirmation, not first."
+          },
+          {
+            "id": "B",
+            "text": "Open the marshalling kiosk and inspect CT secondary wiring, terminal blocks and cable glands for water ingress.",
+            "correct": true,
+            "feedback": "Correct. This is the cheapest, fastest test of the leading hypothesis, and water ingress leaves visible evidence such as staining, corrosion and damp terminals."
+          },
+          {
+            "id": "C",
+            "text": "Replace the differential relay with a spare unit.",
+            "correct": false,
+            "feedback": "Swapping hardware before forming a diagnosis is expensive shotgun maintenance. If the fault is in the CT circuit, the new relay will trip in exactly the same way."
+          },
+          {
+            "id": "D",
+            "text": "Raise the differential pickup setting so the trips stop.",
+            "correct": false,
+            "feedback": "This is desensitising protection to silence a symptom. It leaves the plant less protected against a genuine internal fault, which is a safety decision, not a fix."
+          }
+        ],
+        "stage": "02 INVESTIGATE"
+      },
+      {
+        "id": "step-3",
+        "question": "You find a cracked cable gland and damp CT terminals. What closes this out properly?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Dry the terminals and return the transformer to service.",
+            "correct": false,
+            "feedback": "Drying removes today's moisture but leaves the ingress path open, so the fault returns with the next heavy rain."
+          },
+          {
+            "id": "B",
+            "text": "Replace the gland, re-seal the kiosk, verify CT circuit continuity and insulation, and check other enclosures on site for the same defect.",
+            "correct": true,
+            "feedback": "Correct. Fix the ingress path, prove the secondary circuit is healthy again, and check whether the same construction defect exists elsewhere on the site."
+          },
+          {
+            "id": "C",
+            "text": "Keep the trip records and wait to see whether it happens again next monsoon.",
+            "correct": false,
+            "feedback": "You have a confirmed defect on a protection circuit. Waiting leaves a known unreliable protection scheme in service."
+          },
+          {
+            "id": "D",
+            "text": "Log it as a transformer defect and proceed with the planned outage for internal inspection.",
+            "correct": false,
+            "feedback": "The evidence found is in the secondary circuit. Taking an expensive internal inspection outage now would be acting against your own diagnosis."
+          }
+        ],
+        "stage": "03 DECIDE"
+      }
+    ],
+    "senior_reasoning": "The senior move here is to read the pattern before touching the plant. A fault that correlates with weather and time of day is telling you about its environment, and the cheapest hypothesis consistent with that pattern should be tested first. Differential protection is sensitive to its measurement circuit, so a single compromised CT secondary can produce trips that look exactly like a transformer fault. Once the defect is found, closing out means removing the ingress path, proving the circuit is healthy and checking for the same defect elsewhere.",
+    "lesson": "When a protection trip correlates with weather or time of day, suspect secondary wiring and enclosures before suspecting the primary plant, and never desensitise protection to silence a symptom.",
+    "is_demo": true
+  },
+  {
+    "id": "incident-003",
+    "title": "Migration Lock During Business Hours",
+    "difficulty": "Intermediate",
+    "domain": "Backend Engineering",
+    "estimated_minutes": 6,
+    "description": "A schema migration was started at 10:15 on a weekday. Fifteen minutes in, write requests to the orders table are timing out and the migration has not finished. The maintenance window was estimated at four minutes based on staging.",
+    "steps": [
+      {
+        "id": "step-1",
+        "stage": "01 OBSERVE",
+        "question": "Writes are timing out and the migration is still running. What do you establish first?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Kill the migration immediately to restore writes.",
+            "correct": false,
+            "feedback": "Understandable, but an interrupted migration can leave the table half-altered and the rollback path unclear. Establish what it is doing before you interrupt it."
+          },
+          {
+            "id": "B",
+            "text": "Check whether the migration is holding a lock, and which queries are queued behind it.",
+            "correct": true,
+            "feedback": "Correct. Lock state tells you whether writes are blocked by the migration or failing for another reason, and that determines every option after this."
+          },
+          {
+            "id": "C",
+            "text": "Restart the application servers to clear the timeouts.",
+            "correct": false,
+            "feedback": "The timeouts are a symptom. Restarting the application does not release a database lock, and it discards in-flight work."
+          },
+          {
+            "id": "D",
+            "text": "Announce a full outage and stop all traffic.",
+            "correct": false,
+            "feedback": "Premature. You do not yet know the scope, and stopping all traffic is a larger impact than the one you currently have."
+          }
+        ]
+      },
+      {
+        "id": "step-2",
+        "stage": "02 INVESTIGATE",
+        "question": "The migration holds an exclusive lock and 400 writes are queued. It is 40% through a 40 million row table. What now?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Wait for it to finish, since cancelling risks a partial state.",
+            "correct": false,
+            "feedback": "At 40% after fifteen minutes, finishing means roughly twenty more minutes of failed writes. Waiting is a decision to extend the outage."
+          },
+          {
+            "id": "B",
+            "text": "Cancel the migration, confirm the table is intact, and reschedule it as an online operation.",
+            "correct": true,
+            "feedback": "Correct. This migration type can be cancelled safely because it has not committed, and the online variant avoids the exclusive lock entirely."
+          },
+          {
+            "id": "C",
+            "text": "Increase the database connection limit so queued writes can get through.",
+            "correct": false,
+            "feedback": "They are blocked on a lock, not on connections. More connections simply means more queued writers."
+          },
+          {
+            "id": "D",
+            "text": "Fail over to the replica and run writes there.",
+            "correct": false,
+            "feedback": "The replica is behind and not writable in this topology. Promoting it mid-migration risks losing committed data."
+          }
+        ]
+      },
+      {
+        "id": "step-3",
+        "stage": "03 DECIDE",
+        "question": "Writes recover. What stops this recurring?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Only run migrations at night from now on.",
+            "correct": false,
+            "feedback": "It reduces blast radius but does not fix the estimate. A fifty minute lock at 02:00 is still an outage, with fewer people awake to notice."
+          },
+          {
+            "id": "B",
+            "text": "Rehearse migrations against a production-sized snapshot and require the online variant for large tables.",
+            "correct": true,
+            "feedback": "Correct. The failure was a bad estimate from unrepresentative data plus the wrong migration mode. This addresses both."
+          },
+          {
+            "id": "C",
+            "text": "Add more monitoring on lock waits.",
+            "correct": false,
+            "feedback": "Useful, and worth doing, but monitoring tells you faster that you are having the same outage. It does not prevent it."
+          },
+          {
+            "id": "D",
+            "text": "Split the table so migrations are smaller.",
+            "correct": false,
+            "feedback": "A large architectural change to avoid a procedural problem. The cost and risk far exceed the fix required."
+          }
+        ]
+      }
+    ],
+    "senior_reasoning": "The instinct under pressure is to kill whatever is running. An experienced responder first asks what the running operation is holding, because that determines whether cancelling is safe or catastrophic. Once lock state and progress are known, the choice becomes arithmetic: twenty more minutes of failed writes versus a safe cancellation. Afterwards the real fault is not the migration but the estimate behind it, which came from a dataset nothing like production.",
+    "lesson": "Understand what a running operation holds before interrupting it, and never take a timing estimate from a dataset that is not production-sized.",
+    "is_demo": true
+  },
+  {
+    "id": "incident-004",
+    "title": "Leaked Deploy Credential",
+    "difficulty": "Advanced",
+    "domain": "Security",
+    "estimated_minutes": 7,
+    "description": "At 14:30 an automated scan reports that a deployment credential with production write access was committed to a public repository. The commit is eleven days old. There is no evidence yet of whether it was used.",
+    "steps": [
+      {
+        "id": "step-1",
+        "stage": "01 OBSERVE",
+        "question": "The credential has been public for eleven days. What is the first action?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Delete the commit from the repository history.",
+            "correct": false,
+            "feedback": "The credential must be assumed copied the moment it was public. Removing history hides the evidence and changes nothing about the risk."
+          },
+          {
+            "id": "B",
+            "text": "Revoke the credential immediately, then begin investigating use.",
+            "correct": true,
+            "feedback": "Correct. Revocation is fast, reversible in effect, and closes the exposure. Investigation matters, but not before the door is shut."
+          },
+          {
+            "id": "C",
+            "text": "Review access logs first to see whether it was used.",
+            "correct": false,
+            "feedback": "Investigating first leaves the credential live for the duration of the review. Revoke, then investigate."
+          },
+          {
+            "id": "D",
+            "text": "Rotate every production credential as a precaution.",
+            "correct": false,
+            "feedback": "A mass rotation during an active incident creates a large self-inflicted outage risk. Start with the known-exposed credential."
+          }
+        ]
+      },
+      {
+        "id": "step-2",
+        "stage": "02 INVESTIGATE",
+        "question": "The credential is revoked. Logs show three uses from an unrecognised network range. What matters most now?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Block the source IP range and close the incident.",
+            "correct": false,
+            "feedback": "Blocking one range does not tell you what was done with the access, and an attacker changes address trivially."
+          },
+          {
+            "id": "B",
+            "text": "Determine exactly what those three sessions accessed or changed.",
+            "correct": true,
+            "feedback": "Correct. Scope is the question everything else depends on: notification, recovery, and whether other credentials were taken."
+          },
+          {
+            "id": "C",
+            "text": "Restore the databases from a backup taken before the leak.",
+            "correct": false,
+            "feedback": "Restoring before knowing scope would discard eleven days of legitimate data to address an unquantified risk."
+          },
+          {
+            "id": "D",
+            "text": "Rotate the credential again with a stronger value.",
+            "correct": false,
+            "feedback": "It is already revoked. A second rotation adds nothing and delays the scope question."
+          }
+        ]
+      },
+      {
+        "id": "step-3",
+        "stage": "03 DECIDE",
+        "question": "The sessions read one configuration store and made no writes. How do you close this out?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Note it as read-only access and take no further action.",
+            "correct": false,
+            "feedback": "That configuration store held other secrets. Read access to secrets is not a harmless outcome."
+          },
+          {
+            "id": "B",
+            "text": "Rotate every secret that was readable in that store, and add pre-commit scanning to stop the next leak at source.",
+            "correct": true,
+            "feedback": "Correct. Anything readable during the sessions must be treated as compromised, and the leak path itself needs closing."
+          },
+          {
+            "id": "C",
+            "text": "Add monitoring to alert on unusual network ranges.",
+            "correct": false,
+            "feedback": "Helpful later, but it does not address secrets that are already exposed."
+          },
+          {
+            "id": "D",
+            "text": "Require code review on all commits.",
+            "correct": false,
+            "feedback": "Reviewers routinely miss credentials in a diff. Automated scanning catches this class reliably; review does not."
+          }
+        ]
+      }
+    ],
+    "senior_reasoning": "Security incidents reward a strict order: stop the exposure, then measure it, then remediate what the measurement showed. Reversing that order leaves the door open while you study it. The second discipline is treating access as transitive. A credential that only read a configuration store is not harmless if that store contained other secrets, so the blast radius is everything the session could reach, not just what it demonstrably touched.",
+    "lesson": "Revoke first, scope second, remediate third. Treat everything reachable during unauthorised access as compromised, and close the path that leaked the credential.",
+    "is_demo": true
+  },
+  {
+    "id": "incident-005",
+    "title": "Silent Data Loss in a Nightly Report",
+    "difficulty": "Intermediate",
+    "domain": "Data Engineering",
+    "estimated_minutes": 6,
+    "description": "Maintenance planning reports that this month's work-order totals look low. The nightly pipeline has completed successfully every night for two months with no alerts. Nobody has changed the pipeline code in that period.",
+    "steps": [
+      {
+        "id": "step-1",
+        "stage": "01 OBSERVE",
+        "question": "The pipeline is green but the numbers look wrong. Where do you start?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Rerun last night's job and compare the output.",
+            "correct": false,
+            "feedback": "A rerun with the same inputs and code reproduces the same wrong answer. It confirms determinism, not correctness."
+          },
+          {
+            "id": "B",
+            "text": "Compare row counts at each stage against the source system for a single day.",
+            "correct": true,
+            "feedback": "Correct. Counting rows in and out at each stage localises where records disappear, which is the only way to narrow a silent loss."
+          },
+          {
+            "id": "C",
+            "text": "Ask the planning team to confirm the numbers are actually wrong.",
+            "correct": false,
+            "feedback": "Worth doing in parallel, but they have already reported it. Confirming the complaint does not find the cause."
+          },
+          {
+            "id": "D",
+            "text": "Check whether the source system had an outage.",
+            "correct": false,
+            "feedback": "Reasonable to rule out, but an outage would produce a visible gap on specific dates, not a steady two-month shortfall."
+          }
+        ]
+      },
+      {
+        "id": "step-2",
+        "stage": "02 INVESTIGATE",
+        "question": "Source has 12,400 rows for the day; after the asset join, 8,700 remain. What does that indicate?",
+        "options": [
+          {
+            "id": "A",
+            "text": "The source system is exporting duplicates that the join removes.",
+            "correct": false,
+            "feedback": "Deduplication would need duplicate keys in the source. The count drop is at the join, which points at match failure, not duplication."
+          },
+          {
+            "id": "B",
+            "text": "An inner join is dropping rows whose asset key has no match.",
+            "correct": true,
+            "feedback": "Correct. An inner join silently discards non-matching rows, which is exactly how a pipeline loses data while reporting success."
+          },
+          {
+            "id": "C",
+            "text": "The warehouse is rejecting rows on a constraint.",
+            "correct": false,
+            "feedback": "Constraint rejections normally surface as errors or a quarantine table, and the loss is occurring at the join stage."
+          },
+          {
+            "id": "D",
+            "text": "The job is timing out partway through.",
+            "correct": false,
+            "feedback": "A timeout would fail the job or produce varying counts. This loss is consistent and the job completes."
+          }
+        ]
+      },
+      {
+        "id": "step-3",
+        "stage": "03 DECIDE",
+        "question": "Renamed assets are the cause. What is the right fix?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Switch the inner join to a left join so no rows are lost.",
+            "correct": false,
+            "feedback": "Rows are preserved but arrive with null asset data, moving a visible shortfall into a subtler correctness problem downstream."
+          },
+          {
+            "id": "B",
+            "text": "Resolve asset renames through a mapping table, and assert the join match rate so a drop alerts immediately.",
+            "correct": true,
+            "feedback": "Correct. It fixes the matching itself and makes any future match failure loud instead of silent."
+          },
+          {
+            "id": "C",
+            "text": "Alert whenever the daily row count drops more than 10%.",
+            "correct": false,
+            "feedback": "A useful backstop, but on its own it detects the symptom without fixing the join, and normal volume swings will bury it."
+          },
+          {
+            "id": "D",
+            "text": "Ask the depot team to stop renaming assets.",
+            "correct": false,
+            "feedback": "Renames are legitimate business behaviour. A pipeline that breaks on them is the thing that needs changing."
+          }
+        ]
+      }
+    ],
+    "senior_reasoning": "Silent data loss is dangerous precisely because every technical signal says success. The discipline is to stop trusting job status and start counting: rows in, rows out, at every stage. Once the loss is localised to a join, the cause is almost always a matching assumption that used to hold and quietly stopped. The fix has two halves, and teams often ship only the first: correct the matching, and add an assertion so the next failure announces itself the same night.",
+    "lesson": "A completed job is not a correct job. Assert row counts and join match rates between stages, so silent loss becomes a loud failure.",
+    "is_demo": true
+  }
+]
